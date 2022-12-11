@@ -34,7 +34,7 @@ const Login = () => {
                     to='/registrar'
                     className='block uppercase font-bold text-slate-500 text-center text-sm my-5 hover:text-gray-800'
                 >
-                    ¿Ni tienes una cuenta? Registrate
+                    ¿No tienes una cuenta? Registrate
                 </Link>
                 <Link
                     to='/olvide-password'
