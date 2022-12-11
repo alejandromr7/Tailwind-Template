@@ -31,7 +31,7 @@ const Login = () => {
 
             <nav className='xl:flex xl:justify-between'>
                 <Link
-                    to='registrar'
+                    to='/registrar'
                     className='block uppercase font-bold text-slate-500 text-center text-sm my-5 hover:text-gray-800'
                 >
                     ¿Ni tienes una cuenta? Registrate
