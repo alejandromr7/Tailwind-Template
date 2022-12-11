@@ -1,7 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import instance from '../../config/clienteAxios';
+import Alerta from '../components/Alerta';
 
 const Login = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [alerta, setAlerta] = useState({});
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+
+        if ([email, password].includes('')) {
+            setAlerta({ msg: 'Todos los campos son obligatorios', error: true });
+            return;
+        }
+
+        try {
+            const { data } = await instance.post(`/usuarios/login`, { email, password });
+            setAlerta({});
+            localStorage.setItem('token', data.token)
+        } catch (error) {
+            setAlerta({ msg: error.response.data.msg, error: true });
+        }
+
+    }
+
+    const { msg } = alerta;
+
     return (
         <>
             <h1 className='text-sky-600 font-black text-6xl capitalize text-center'>
@@ -9,15 +37,30 @@ const Login = () => {
                 <span className='text-slate-700'>Proyectos</span>
             </h1>
 
-            <form className='my-10 bg-white shadow-lg rounded-lg px-10 py-5'>
+            {msg && <Alerta alerta={alerta} />}
+
+            <form onSubmit={handleSubmit} className='my-10 bg-white shadow-lg rounded-lg px-10 py-5'>
                 <div className='my-5'>
                     <label htmlFor="email" className='uppercase text-gray-600 block text-xl font-bold'>Email</label>
-                    <input type="text" id='email' placeholder='Email' className='w-full p-3 bg-gray-50 rounded-xl border ' />
+                    <input
+                        type="text"
+                        id='email'
+                        placeholder='Email'
+                        className='w-full p-3 bg-gray-50 rounded-xl border '
+                        onChange={e => setEmail(e.target.value)}
+                        value={email}
+                    />
                 </div>
-
                 <div className='my-5'>
                     <label htmlFor="password" className='uppercase text-gray-600 block font-bold text-xl'>Contraseña</label>
-                    <input type="password" id='password' className='w-full bg-gray-50 p-3 rounded-xl border' placeholder='Contraseña' />
+                    <input
+                        type="password"
+                        id='password'
+                        className='w-full bg-gray-50 p-3 rounded-xl border'
+                        placeholder='Contraseña'
+                        onChange={e => setPassword(e.target.value)}
+                        value={password}
+                    />
                 </div>
 
                 <input

@@ -16,7 +16,6 @@ const Registrar = () => {
         e.preventDefault();
 
         if ([nombre, email, password, confirmar].includes('')) {
-            console.log();
             setAlerta({ msg: 'Todos los campos son obligatorios', error: true });
             return;
         }
