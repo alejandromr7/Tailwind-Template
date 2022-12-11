@@ -7,6 +7,9 @@ import OlvidePassword from './pages/OlvidePassword'
 import Registrar from './pages/Registrar'
 
 const App = () => {
+
+  console.log(import.meta.env.VITE_BACKEND_URL);
+
   return (
     <BrowserRouter>
       <Routes>

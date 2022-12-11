@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import instance from '../../config/clienteAxios';
 import Alerta from '../components/Alerta';
 
 const Registrar = () => {
@@ -31,9 +32,15 @@ const Registrar = () => {
         }
 
         try {
-            const { data } = await axios.post('http://192.168.0.13:4000/api/usuarios', { nombre, email, password });
+            const { data } = await instance.post(`/usuarios`, { nombre, email, password });
             setAlerta({ msg: 'Usuario guardado correctamente', error: false });
             console.log(data);
+
+            setNombre('');
+            setEmail('');
+            setPassword('');
+            setConfirmar('');
+
         } catch (error) {
             setAlerta({ msg: error.response.data.msg, error: true });
         }
